@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"><!--onclick = "jump()"-->
+<head>
+    <meta charset="UTF-8">
+    <title>Jump Game</title>
+    <!--<link rel="stylesheet" href="/home/abc/Documents/web development/JavaScript/easy.css">-->
+    <style type="text/css">
+        *{
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+.game{
+    width: 1200px;
+    height: 200px;
+    border: 1px solid black;
+    margin: auto;
+}
+#character{
+    width: 50px;
+    height: 50px;
+    background-image: url("https://github.com/mdbootstrap/knowledge-base/blob/main/JS/games/dino-game/img/trex.png?raw=true");
+    background-size: 50px 50px;
+    position:relative;
+    top: 150px;
+}
+
+
+.animate{
+    animation: jump 0.3s linear;
+}
+@keyframes jump{
+    0%{top: 150px;}
+    30%{top: 100px;}
+    70%{top: 100px;}
+    100%{top: 150px;}
+}
+
+#block{
+    width: 20px;
+    height: 40px;
+    position: relative;
+    top: 110px;
+    left: 1130px;
+    background-image: url("https://github.com/mdbootstrap/knowledge-base/blob/main/JS/games/dino-game/img/cactus.png?raw=true");
+    background-size: 20px 40px;
+    animation: block 1s infinite linear;
+}
+
+
+@keyframes block{
+    0%{left: 1130px}
+    100%{left: -20px}
+}
+
+p{
+    text-align: center;
+    margin: 20px;
+}
+
+h1{
+    margin: 20px;
+  text-align: center;
+  font-weight: 200;
+}
+h3{
+    margin: 20px;
+  text-align: center;
+  font-weight: 200;
+}
+a:link {
+  text-decoration: none;
+  color: black;
+}
+a:visited {
+  color: black;
+}
+
+a:hover {
+  color: red;
+}
+
+    </style>
+</head>
+<body>
+    <!--<h1><a href="/home/abc/Documents/web development/JavaScript/index.html">The Dinosaur Game</a></h1>-->
+    <h1>The Dinosaur Game</h1>
+    <h3>Level Easy </h3>
+    <div class="game">
+        <div id="character"></div>
+        <div id="block"></div>
+    </div>
+    <p>Score: <span id="scoreSpan"></span></p>
+    <p>Can you take the Dinosaur to victory, play and try how good are you.</p>
+    <p>During gameplay, a running dinosaur moves from left to right across a desert landscape, and the player avoids oncoming obstacles by jumping or ducking, including cacti and pterodactyls. Pressing space will jump. As gameplay progresses, the speed of play increases until the user cannot keep up and hits an obstacle, prompting an instant game over.<br>
+
+    When the player reaches 1800 points, the game switches from black graphics on white, to white graphics on black, representing a shift from day to night. Reaching a score of 900 will switch the color scheme back, and will switch back and forth at subsequent milestones. The game was designed to reach a maximum score after approximately 17 million years of playtime, in reference to how long the Tyrannosaurus rex existed before it went extinct.</p>
+
+</body>
+<!--<script src="/home/abc/Documents/web development/JavaScript/easy.js"></script>-->
+    <script type="text/javascript">
+        var character = document.getElementById("character");
+var block = document.getElementById("block");
+var counter=0;
+function jump(){
+    if(character.classList == "animate"){return}
+    character.classList.add("animate");
+    setTimeout(function(){
+        character.classList.remove("animate");
+    },300);
+}
+var checkDead = setInterval(function() {
+    let characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+    let blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
+    if(blockLeft<20 && blockLeft>-20 && characterTop>=130){
+        block.style.animation = "none";
+        alert("Game Over. score: "+Math.floor(counter/100));
+        counter=0;
+        block.style.animation = "block 1s infinite linear";
+    }else{
+        counter++;
+        document.getElementById("scoreSpan").innerHTML = Math.floor(counter/100);
+    }
+}, 10);
+
+document.addEventListener("keydown", function (event) {
+  jump();
+});
+
+
+
+
+    </script>
+</html>
